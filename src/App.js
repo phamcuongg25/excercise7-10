@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import EventHandlingDemo from './components/EventHandlingDemo';
+import RenderAndCommitDemo from './components/RenderAndCommitDemo';
+import SnapshotDemo from './components/SnapshotDemo';
+
+import AnimalCard from './components/AnimalCard';
+import animals from './data/animals';
 
 function App() {
+  const showAdditionalData = (additional) => {
+    const additionalData = Object.entries(additional)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join('\n');
+
+    alert(additionalData);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <EventHandlingDemo />
+      <RenderAndCommitDemo />
+      <SnapshotDemo />
+      <h1>Animals</h1>
+
+      {animals.map((animal) => (
+        <AnimalCard
+          key={animal.name}
+          name={animal.name}
+          scientificName={animal.scientificName}
+          size={animal.size}
+          diet={animal.diet}
+          additional={animal.additional}
+          showAdditional={showAdditionalData}
+        />
+      ))}
     </div>
   );
 }
